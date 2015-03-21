@@ -111,7 +111,7 @@ public class MyCharacter {//for ch 3 GZ#2, did it just because I could
 				message+= " ran up to " + this.getRunSpeed() + " units/sec."; //use past-tense if they're dead
 			}
 			else{
-				message+= " run up to " + this.getRunSpeed() + " units/sec.";//or current tense if they're not
+				message+= " can run up to " + this.getRunSpeed() + " units/sec.";//or current tense if they're not
 			}
 		}//get their run speed
 		

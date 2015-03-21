@@ -68,7 +68,7 @@ public class GameWithPassword {
 					break;
 			}
 			if(Usernames.isEmpty()){
-				throw new FileSystemException("Phrases seems to be empty!");
+				throw new FileSystemException("Usernames seems to be empty!");
 			}
 			input.close();
 			reader.close();
