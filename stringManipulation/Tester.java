@@ -1,8 +1,6 @@
-package others;
+package stringManipulation;
 
 import java.util.Scanner;
-
-import stringManipulation.FuzzyMatch;
 
 public class Tester {
 

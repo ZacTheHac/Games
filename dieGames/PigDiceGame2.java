@@ -95,6 +95,7 @@ public class PigDiceGame2 {//ch6 GZ4b
 						System.out.println("Player chose to pass their turn.");
 						playerScore += roundScore;//give the player this round's score
 						System.out.println("Player earns "+roundScore+" points, bringing them up to "+playerScore+" total");
+						System.out.println();
 						roundScore = 0;//reset this round's score
 						plyTurn = false;//pass to the computer
 					}
@@ -102,6 +103,7 @@ public class PigDiceGame2 {//ch6 GZ4b
 						System.out.println("You closed the option box. Taking that as a \"no\".");
 						playerScore += roundScore;//add the round's score to the player's score
 						System.out.println("Player earns "+roundScore+" points, bringing them up to "+playerScore+" total");
+						System.out.println();
 						roundScore = 0;//reset the round's score
 						plyTurn = false;//pass to the computer
 					}
@@ -131,6 +133,7 @@ public class PigDiceGame2 {//ch6 GZ4b
 						System.out.println("Computer chose to pass their turn.");
 						compScore += roundScore; //add the roundscore to their running total
 						System.out.println("Computer earns "+roundScore+" points, bringing them up to "+compScore+" total");
+						System.out.println();
 						roundScore = 0;//reset the round score
 						plyTurn = true;//make it the player's turn
 					}
@@ -146,11 +149,13 @@ public class PigDiceGame2 {//ch6 GZ4b
 				if(plyTurn){
 					playerScore = 0;//reset their score
 					plyTurn = false;//switch turns to computer
+					System.out.println();
 					System.out.println("Turn passed to the Computer, as the player rolled both 1s, resetting their score");
 				}
 				else{
 					compScore = 0;//reset the computer's score
 					plyTurn = true;//pass turn to player
+					System.out.println();
 					System.out.println("Turn passed to the Player, as the computer rolled both 1s, resetting their score");
 				}
 				
@@ -158,11 +163,13 @@ public class PigDiceGame2 {//ch6 GZ4b
 			else{//one of the die showed a 1, pass the turn to the other player
 				if(plyTurn){//if it is the player's turn
 					plyTurn = false;//make it not
+					System.out.println();
 					System.out.println("Turn passed to the Computer, as the player rolled a 1, losing out on "+roundScore+" points.");
 					roundScore = 0;//reset the round's score
 				}
 				else{//if it's the computer's turn
 					plyTurn = true;//pass it to the player
+					System.out.println();
 					System.out.println("Turn passed to the Player, as the computer rolled a 1, losing out on "+roundScore+" points.");
 					roundScore = 0;//reset the round's score
 				}
