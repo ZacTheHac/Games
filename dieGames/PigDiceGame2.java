@@ -38,6 +38,9 @@ import javax.swing.JOptionPane;
 
 public class PigDiceGame2 {//ch6 GZ4b
 
+	static long WaitTime = 500;
+	static boolean SlowPrint = true;
+	
 	public static void main(String[] args) {
 		short playerScore = 0;//hold the player's score
 		short compScore = 0;//the computer's score
@@ -47,6 +50,13 @@ public class PigDiceGame2 {//ch6 GZ4b
 		boolean finished = false;//is the game finished?
 		boolean plyTurn = true;//who's turn is it? true = ply, false = comp
 		boolean newAI = true;
+		int PrintChoice = JOptionPane.showConfirmDialog(null, "Would you like to print the output slowly?", "Slow down gameplay?", JOptionPane.YES_NO_OPTION);
+		if(PrintChoice == JOptionPane.YES_OPTION){
+			SlowPrint = true;
+		}
+		else{
+			SlowPrint=false;
+		}
 		int AIChoice = JOptionPane.showConfirmDialog(null, "Would you like to try the new AI?", "Use AI?", JOptionPane.YES_NO_OPTION);
 		if(AIChoice == JOptionPane.YES_OPTION){
 			newAI = true;
@@ -63,8 +73,8 @@ public class PigDiceGame2 {//ch6 GZ4b
 			if(dieOne.getValue() != 1 && dieTwo.getValue() != 1){//if neither of them are 1
 				roundScore += dieOne.getValue() + dieTwo.getValue();//adds the 2 scores to the round score
 				if(plyTurn){
-					System.out.println("Player earns " + (dieOne.getValue() + dieTwo.getValue()) + " points!");
-					System.out.println("Player's points this round: "+roundScore);
+					println("Player earns " + (dieOne.getValue() + dieTwo.getValue()) + " points!");
+					println("Player's points this round: "+roundScore);
 					//I could keep the check in here to see if they've already won, but maybe someone wants
 					//to risk it all, just to rub it in the computer's face. or lose it all.
 					String reccomend = "";//let the computer make a reccomendation.
@@ -77,7 +87,7 @@ public class PigDiceGame2 {//ch6 GZ4b
 						reccomend = "We reccomend you keep rolling.";
 					}
 					
-					Object choice = JOptionPane.showInputDialog(null, "Would you like to keep rolling? \nYou will be risking "+roundScore+" points. \nYou will have "+(playerScore + roundScore)+" points if you pass now. \nYour Opponent has "+compScore+" points.\n"+reccomend, "Keep rolling?", JOptionPane.QUESTION_MESSAGE, null, options, lastChoice);
+					Object choice = JOptionPane.showInputDialog(null, "Would you like to keep rolling? \n\n You will be risking "+roundScore+" points. \nYou have "+playerScore+" points. \nYou will have "+(playerScore + roundScore)+" points if you pass now. \n\nYour Opponent has "+compScore+" points.\n\n\n"+reccomend, "Keep rolling?", JOptionPane.QUESTION_MESSAGE, null, options, lastChoice);
 					//create an option pane w/ yes and no, store the result as "choice"
 					lastChoice = choice;//so if they have a favorite, they don't have to switch every time.
 					if(choice == options[2]){
@@ -89,28 +99,28 @@ public class PigDiceGame2 {//ch6 GZ4b
 						}
 					}
 					if(choice == options[0]){//if they chose to keep rolling
-						System.out.println("Player chose to roll again, risking "+roundScore+" points!");
+						println("Player chose to roll again, risking "+roundScore+" points!");
 					}
 					else if(choice == options[1]){//if they chose to pass
-						System.out.println("Player chose to pass their turn.");
+						println("Player chose to pass their turn.");
 						playerScore += roundScore;//give the player this round's score
-						System.out.println("Player earns "+roundScore+" points, bringing them up to "+playerScore+" total");
+						println("Player earns "+roundScore+" points, bringing them up to "+playerScore+" total");
 						System.out.println();
 						roundScore = 0;//reset this round's score
 						plyTurn = false;//pass to the computer
 					}
 					else{//result wasn't yes or no, so I'll take that as a no. - they prob. just closed the message
-						System.out.println("You closed the option box. Taking that as a \"no\".");
+						println("You closed the option box. Taking that as a \"no\".");
 						playerScore += roundScore;//add the round's score to the player's score
-						System.out.println("Player earns "+roundScore+" points, bringing them up to "+playerScore+" total");
+						println("Player earns "+roundScore+" points, bringing them up to "+playerScore+" total");
 						System.out.println();
 						roundScore = 0;//reset the round's score
 						plyTurn = false;//pass to the computer
 					}
 				}
 				else{
-					System.out.println("Computer earns " + (dieOne.getValue() + dieTwo.getValue()) + " points!");
-					System.out.println("Computer's points this round: "+roundScore);
+					println("Computer earns " + (dieOne.getValue() + dieTwo.getValue()) + " points!");
+					println("Computer's points this round: "+roundScore);
 					boolean shouldPass = true;
 					if(newAI){//if we're using the better AI
 						shouldPass=ShouldPass(compScore, roundScore, playerScore); //just use this method to see if the comp should pass
@@ -130,16 +140,16 @@ public class PigDiceGame2 {//ch6 GZ4b
 					}
 					if(shouldPass){
 						//pass turn
-						System.out.println("Computer chose to pass their turn.");
+						println("Computer chose to pass their turn.");
 						compScore += roundScore; //add the roundscore to their running total
-						System.out.println("Computer earns "+roundScore+" points, bringing them up to "+compScore+" total");
+						println("Computer earns "+roundScore+" points, bringing them up to "+compScore+" total");
 						System.out.println();
 						roundScore = 0;//reset the round score
 						plyTurn = true;//make it the player's turn
 					}
 					else{
 						//keep rolling
-						System.out.println("Computer chose to keep rolling, risking "+roundScore+" points!");
+						println("Computer chose to keep rolling, risking "+roundScore+" points!");
 					}
 				}
 			}
@@ -150,13 +160,13 @@ public class PigDiceGame2 {//ch6 GZ4b
 					playerScore = 0;//reset their score
 					plyTurn = false;//switch turns to computer
 					System.out.println();
-					System.out.println("Turn passed to the Computer, as the player rolled both 1s, resetting their score");
+					println("Turn passed to the Computer, as the player rolled both 1s, resetting their score");
 				}
 				else{
 					compScore = 0;//reset the computer's score
 					plyTurn = true;//pass turn to player
 					System.out.println();
-					System.out.println("Turn passed to the Player, as the computer rolled both 1s, resetting their score");
+					println("Turn passed to the Player, as the computer rolled both 1s, resetting their score");
 				}
 				
 			}
@@ -164,13 +174,13 @@ public class PigDiceGame2 {//ch6 GZ4b
 				if(plyTurn){//if it is the player's turn
 					plyTurn = false;//make it not
 					System.out.println();
-					System.out.println("Turn passed to the Computer, as the player rolled a 1, losing out on "+roundScore+" points.");
+					println("Turn passed to the Computer, as the player rolled a 1, losing out on "+roundScore+" points.");
 					roundScore = 0;//reset the round's score
 				}
 				else{//if it's the computer's turn
 					plyTurn = true;//pass it to the player
 					System.out.println();
-					System.out.println("Turn passed to the Player, as the computer rolled a 1, losing out on "+roundScore+" points.");
+					println("Turn passed to the Player, as the computer rolled a 1, losing out on "+roundScore+" points.");
 					roundScore = 0;//reset the round's score
 				}
 				
@@ -183,18 +193,23 @@ public class PigDiceGame2 {//ch6 GZ4b
 		}//end of while loop
 		
 		if(playerScore >= 100){//if it's the player that won
-			System.out.println("The player wins with " + playerScore + " points! " + (playerScore-compScore) + " points more than the computer!");
+			println("The player wins with " + playerScore + " points! " + (playerScore-compScore) + " points more than the computer!");
 		}
 		else if(compScore >= 100){//if the computer won
-			System.out.println("The computer wins with " + compScore + " points! " + (compScore-playerScore) + " points more than the player!");
+			println("The computer wins with " + compScore + " points! " + (compScore-playerScore) + " points more than the player!");
 		}
 		else{//somehow neither won, but it broke out of the loop...
-			System.out.println("Please restart the program. something broke.");
+			println("Please restart the program. something broke.");
 		}
 
 	}
 	
 	public static boolean ShouldPass(int CurrentScore, int RoundScore, int PlayerScore){
+		//should add in some more ideas: 
+		//more heavy biasing toward risking small amounts of points, 
+		//checking if other player is likely to win next round (say within ~15 points?) and maybe being more risky if they have a chance?
+		//allow a higher change of the AI just charging ahead instead of rubber-banding?
+		
 		if((RoundScore+CurrentScore) >=100){
 			return true;//if the comp will win if it passes, tell it to pass.
 		}
@@ -239,6 +254,17 @@ public class PigDiceGame2 {//ch6 GZ4b
 				return false; //don't skip
 			}
 		}
+	}
+	
+	public static void println(String output){
+		System.out.println(output);
+		if(SlowPrint)
+			try {
+				Thread.sleep(WaitTime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 }
