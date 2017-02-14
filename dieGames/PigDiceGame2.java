@@ -222,12 +222,12 @@ public class PigDiceGame2 {//ch6 GZ4b
 			double rand = Math.random();
 			double riskFactor = 1-(double)RoundScore/35d;//basic calculated risk
 			if(RoundScore < 15){//if you're not risking too much, add a bias toward risking it.
-				riskFactor += .4;//looks high, but remember that it gets halved by the averaging.
+				riskFactor += .6;//looks high, but remember that it gets halved by the averaging.
 			}
 			double desperation = 0;//the computer risks more if the player is beating it.
 			if(CurrentScore > PlayerScore+15){
 				//if the computer is winning by 15+ pts, no matter this score
-				desperation = 0.2;//don't want to make it a COMPLETE 0 chance.
+				desperation = 0.4;//don't want to make it a COMPLETE 0 chance.
 			}
 			else if((CurrentScore+RoundScore) > PlayerScore){
 				//if the computer will gain on the player if it earns these points
@@ -265,8 +265,8 @@ public class PigDiceGame2 {//ch6 GZ4b
 			try {
 				Thread.sleep(WaitTime);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				//I HONESTLY DON'T CARE
 			}
 	}
 
