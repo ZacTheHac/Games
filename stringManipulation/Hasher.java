@@ -6,7 +6,6 @@ public class Hasher {
 
 	public static void main(String[] args) {
 		String word ="";
-		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 		while(true){
 			word= input.nextLine();

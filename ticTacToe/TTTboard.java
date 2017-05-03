@@ -1,9 +1,12 @@
 package ticTacToe;
 
 public class TTTboard{
-	private int gridsize = 3;
-	private String[][] board;
+	private int gridsize; //this just holds the value. Modifying it here does nothing
+	private String[][] board; //holds all possible plays
 	private String winner = null;
+	//this is only global so that if a board is won, we don't have to keep checking it.
+	//Once there's a winner, they win
+	//we don't do that "2 winners" BS
 	
 	TTTboard(){
 		this(3);
@@ -58,6 +61,162 @@ public class TTTboard{
 		catch(Exception ex){
 			return false;
 		}
+	}
+	
+	boolean WinPossible(){
+		return this.WinPossible(false);
+	}
+	boolean WinPossible(boolean printResults){//Checks if a board is even possible to win on (even if there are still open spaces)
+		boolean ImpossibleWin = false;//will hold if the current check resulted in no possible win
+		char currWinner = 'N';
+		int[] PossibleWins = new int[3]; //x,o,neither
+		//go down each collumn
+		for(int coll = 0; coll<gridsize;coll++){
+			currWinner = 'N';
+			for(int row = 0; row < gridsize; row++){
+				if(!this.isPlayable(row, coll)){
+					//place is played
+					if(currWinner == 'N'){
+						currWinner = this.getSpotInfo(row, coll).charAt(0);//get the first character since it should be the player
+					}//if there has been no player until now, store it
+					else if(currWinner == this.getSpotInfo(row, coll).charAt(0)){
+						//They're already winning, so continue
+						continue;
+					}
+					else{//it's not the current winner, so we know that there are 2 players in this collumn, and is thus
+						PossibleWins[2]++;
+						ImpossibleWin = true;
+						break;
+					}
+				}
+			}
+			if (!ImpossibleWin) {
+				if (currWinner == 'X')
+					PossibleWins[0]++;
+				else if (currWinner == 'O')
+					PossibleWins[1]++;
+				else {
+					PossibleWins[0]++;
+					PossibleWins[1]++;
+				} // if neither are winning a row, but it's not impossible,
+					// either can win;
+			} else {
+				ImpossibleWin = false;// make sure to reset it after
+			}
+		}
+		
+		//go across each row
+		currWinner = 'N';//honestly I'm only putting this so I can debug before the loop
+		for(int row = 0; row<gridsize;row++){
+			currWinner = 'N';
+			for(int coll = 0; coll < gridsize; coll++){
+				if(!this.isPlayable(row, coll)){
+					//place is played
+					if(currWinner == 'N'){
+						currWinner = this.getSpotInfo(row, coll).charAt(0);//get the first character since it should be the player
+					}//if there has been no player until now, store it
+					else if(currWinner == this.getSpotInfo(row, coll).charAt(0)){
+						//They're already winning, so continue
+						continue;
+					}
+					else{//it's not the current winner, so we know that there are 2 players in this collumn, and is thus
+						PossibleWins[2]++;
+						ImpossibleWin=true;
+						break;
+					}
+				}
+			}
+			if (!ImpossibleWin) {
+				if (currWinner == 'X')
+					PossibleWins[0]++;
+				else if (currWinner == 'O')
+					PossibleWins[1]++;
+				else {
+					PossibleWins[0]++;
+					PossibleWins[1]++;
+				} // if neither are winning a row, but it's not impossible,
+					// either can win;
+			} else {
+				ImpossibleWin = false;// make sure to reset it after
+			}
+		}
+		//check diagonals
+		//left-to-right
+		currWinner = 'N';
+		for(int i = 0;i<gridsize;i++){
+			if(!this.isPlayable(i, i)){
+				//place is played
+				if(currWinner == 'N'){
+					currWinner = this.getSpotInfo(i, i).charAt(0);//get the first character since it should be the player
+				}//if there has been no player until now, store it
+				else if(currWinner == this.getSpotInfo(i, i).charAt(0)){
+					//They're already winning, so continue
+					continue;
+				}
+				else{//it's not the current winner, so we know that there are 2 players in this collumn, and is thus
+					PossibleWins[2]++;
+					ImpossibleWin=true;
+					break;
+				}
+			}
+		}
+		if (!ImpossibleWin) {
+			if (currWinner == 'X')
+				PossibleWins[0]++;
+			else if (currWinner == 'O')
+				PossibleWins[1]++;
+			else {
+				PossibleWins[0]++;
+				PossibleWins[1]++;
+			} // if neither are winning a row, but it's not impossible,
+				// either can win;
+		} else {
+			ImpossibleWin = false;// make sure to reset it after
+		}
+		//right-to-left
+		currWinner = 'N';
+		for(int i = 0;i<gridsize;i++){
+			int coll = (gridsize - 1)-i;
+			if(!this.isPlayable(i, coll)){
+				//place is played
+				if(currWinner == 'N'){
+					currWinner = this.getSpotInfo(i, coll).charAt(0);//get the first character since it should be the player
+				}//if there has been no player until now, store it
+				else if(currWinner == this.getSpotInfo(i, coll).charAt(0)){
+					//They're already winning, so continue
+					continue;
+				}
+				else{//it's not the current winner, so we know that there are 2 players in this collumn, and is thus
+					PossibleWins[2]++;
+					ImpossibleWin=true;
+					break;
+				}
+			}
+		}
+		if (!ImpossibleWin) {
+			if (currWinner == 'X')
+				PossibleWins[0]++;
+			else if (currWinner == 'O')
+				PossibleWins[1]++;
+			else {
+				PossibleWins[0]++;
+				PossibleWins[1]++;
+			} // if neither are winning a row, but it's not impossible,
+				// either can win;
+		} else {
+			ImpossibleWin = false;// make sure to reset it after
+		}
+		
+		if(printResults){
+			System.out.println("X can win in "+PossibleWins[0]+" ways.");
+			System.out.println("O can win in "+PossibleWins[1]+" ways.");
+			System.out.println(PossibleWins[2]+" ways are impossible.");
+		}
+		
+		if(PossibleWins[2] == (2+gridsize*2))//if all possible ways have no possible wins, it's impossible
+			return false;
+		return true;//otherwise it's still possible to win.
+		
 	}
 	
 	String getWinner(){//returns a winner, if there is one. null otherwise.
@@ -164,17 +323,25 @@ public class TTTboard{
 				}
 			}
 
-			//now check that there is still a valid place to play
+			/*//now check that there is still a valid place to play
 			for(String[] row : board){
 				for(String point : row){
 					if(isInt(point)){
 						this.winner = null;
-						return this.winner;							//if there is an integer in any point, it's a valid place to play
+						return this.winner;
+						//if there is an integer in any point, it's a valid place to play
 					}
 				}
+			}*/
+			if(this.WinPossible()){
+				this.winner = null;
+				return this.winner;
+			}//nobody has won, but it's still possible to win
+			else{
+				this.winner = "Nobody";
+				return this.winner;
 			}
-			this.winner = "Nobody";
-			return this.winner;									//if it got here, nobody won, but there are no more valid places to play. nobody wins.
+			//if it got here, nobody won, but there are no more winning plays. nobody wins.
 		}
 
 	boolean isPlayable(int y, int x){
@@ -185,6 +352,23 @@ public class TTTboard{
 		else{
 			return isInt(board[y][x]);
 		}
+	}
+	
+	String getSpotInfo(int y, int x){
+		int maxIndex = this.gridsize-1;
+		if(x>maxIndex||x<0||y>maxIndex||y<0){
+			throw new IndexOutOfBoundsException("The values "+x+" or "+y+"were outside the bounds of 0-"+maxIndex);
+		}
+		else{
+			return board[y][x];
+		}
+	}
+	
+	int getSpotNumber(int y, int x){
+		if(this.isPlayable(y,x)){
+			return Integer.parseInt(board[y][x]);
+		}
+		return 0;
 	}
 	
 	boolean isValidSquareNumber(int number){
@@ -254,7 +438,7 @@ public class TTTboard{
 			if(r+1<size){
 				line = "";
 				for(int i = 1; i<=lineWidth ; ++i){
-					line+="-";
+						line+="-";
 				}
 				System.out.println(line);
 			}

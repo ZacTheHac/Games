@@ -26,7 +26,7 @@ public class UltimateTTTboard extends TTTboard {
 			this.uBoardSize=size;
 		}
 		else{
-			throw new IndexOutOfBoundsException(size+"is not >1 and odd");
+			throw new IndexOutOfBoundsException(size+" is not >1 and odd");
 		}
 	}
 	
@@ -171,7 +171,7 @@ public class UltimateTTTboard extends TTTboard {
 			for(int x = 0; x < this.getGridSize(); ++x){
 				String win = this.getSubBoard(y, x).getWinner();
 				if(win!=null){
-					if(win.equalsIgnoreCase("nobody")){
+					if(win.equalsIgnoreCase("Nobody")){
 						displayBoard.play(y, x, "N");
 					}
 					else{
